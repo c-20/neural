@@ -244,6 +244,7 @@ double calculateerror(arr actual, arr ideal) {
 }
 
 void showpatternfile(int patternnumber, int noise, int line) {
+  char *dirpath = "patterns/";
   char *files[] = { "Clock", "Cross", "Exclamation", "Face",
                     "GiveWay", "House", "Info", "Smile",
                     "Stand", "Stop", "Tick", "Walk" };
@@ -251,7 +252,7 @@ void showpatternfile(int patternnumber, int noise, int line) {
   int patternindex = patternnumber - 1;
   if (line == -1) { printf("%s", files[patternindex]); return; }
   char filename[100]; // line 0 = all lines, else line N no \n
-  sprintf(filename, "%s.%d.txt", files[patternindex], noise);
+  sprintf(filename, "%s%s.%d.txt", dirpath, files[patternindex], noise);
   FILE *fp = fopen(filename, "r");
   if (!fp) { printf("showfile failed.\n"); return; }
   int row = 1; // first line is line 1
@@ -284,6 +285,7 @@ void showpatternline(int patternnumber, int noise, int line) {
 }
 
 void teachpattern(network *net, int patternnumber, int noise, arr *output) {
+  char *dirpath = "patterns/";
   char *files[] = { "Clock", "Cross", "Exclamation", "Face",
                     "GiveWay", "House", "Info", "Smile",
                     "Stand", "Stop", "Tick", "Walk" };
@@ -309,7 +311,7 @@ void teachpattern(network *net, int patternnumber, int noise, arr *output) {
     patternindex = (0 - patternnumber) - 1;
   }
   char filename[100];
-  sprintf(filename, "%s.%d.txt", files[patternindex], noise);
+  sprintf(filename, "%s%s.%d.txt", dirpath, files[patternindex], noise);
   loadpattern(pattern.v, filename, patternwidth, patternheight);
   if (mode == 'L') { // LEARN mode - teach
     double idealoutputv[] = { 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 };
